@@ -13,6 +13,13 @@ pipeline {
             }
         }
 
+        stage('Check Docker') {
+            steps {
+                sh 'which docker'
+                sh 'docker --version'
+            }
+        }
+
         stage('Build Image') {
             steps {
                 sh 'docker build -t $IMAGE_NAME .'
