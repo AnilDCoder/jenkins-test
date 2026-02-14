@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins-test
+  name: jenkins-test-k8s-deployment
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: jenkins-test
-          image: anildcoder/jenkins-test
-          imagePullPolicy: IfNotPresent
+          image: anildcoder/jenkins-test:latest
           ports:
             - containerPort: 8080

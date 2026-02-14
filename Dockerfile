@@ -1,6 +1,6 @@
 # -------- Stage 1: Build the app --------
 FROM gradle:8.5-jdk17 AS build
-WORKDIR /app
+WORKDIR /jenkins-test
 
 # Copy Gradle files first (for better caching)
 COPY build.gradle settings.gradle gradlew ./
@@ -17,13 +17,13 @@ RUN ./gradlew clean build -x test --no-daemon
 
 # -------- Stage 2: Run the app --------
 FROM eclipse-temurin:17-jre
-WORKDIR /app
+WORKDIR /jenkins-test
 
 # Copy jar from build stage
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /jenkins-test/build/libs/*.jar jenkins-test.jar
 
 # Expose Spring Boot port
 EXPOSE 8081
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "jenkins-test.jar"]
