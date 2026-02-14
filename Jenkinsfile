@@ -37,5 +37,13 @@ pipeline {
                 sh 'docker run -d -p 8081:8080 --name $CONTAINER_NAME $IMAGE_NAME'
             }
         }
+
+        stage('Deploy to K8s') {
+          steps {
+            sh 'kubectl apply -f k8s/deployment.yaml'
+            sh 'kubectl apply -f k8s/service.yaml'
+            sh 'kubectl rollout restart deployment jenkins-test'
+          }
+        }
     }
 }
