@@ -7,11 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/AnilDCoder/jenkins-test.git'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
